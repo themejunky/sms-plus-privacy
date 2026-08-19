@@ -1,5 +1,8 @@
 {
   "planScreen": "paywall",
   "trialDays": 7,
-  "trialMessages": 0
+  "trialMessages": 0,
+  "yearlyProductID": "com.themejunky.smsplus.ios.premium.yearly.b",
+  "monthlyProductID": "com.themejunky.smsplus.ios.premium.monthly.b",
+  "lifetimeProductID": "com.themejunky.smsplus.ios.premium.lifetime.b"
 }
