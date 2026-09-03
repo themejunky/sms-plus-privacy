@@ -97,3 +97,57 @@ To go back, delete the key. There is no rollback to get wrong.
 - Unknown keys are ignored, so adding a key a shipped build does not know about
   is safe. An unknown *value* for `planScreen` is not: the file is rejected and
   the cached copy stays in force.
+
+## Keyboard Plus iOS — pricing test (`keyboardPlusPricingExperiment`)
+
+Keyboard Plus iOS reads this same file. It ignores every SMS Plus product key
+and reads only this namespaced block; SMS Plus iOS ignores the block. Absent,
+disabled or killed, Keyboard Plus sells its shipped products
+(`com.themejunky.keyboardplusapp.premium.annual` + `.monthly`).
+
+```json
+{
+  "keyboardPlusPricingExperiment": {
+    "enabled": true,
+    "killSwitch": false,
+    "forcedArm": null,
+    "arms": [
+      { "id": "pricing_a_current", "weight": 50 },
+      { "id": "pricing_b_weekly", "weight": 50,
+        "annualProductID": "com.themejunky.keyboardplusapp.premium.annual.b",
+        "weeklyProductID": "com.themejunky.keyboardplusapp.premium.weekly" }
+    ]
+  }
+}
+```
+
+| Field | Values | Meaning |
+|---|---|---|
+| `enabled` | bool, default `false` | `false` → no bucket is drawn, every install gets the shipped products. |
+| `killSwitch` | bool, default `false` | `true` → everyone, including assigned installs, gets the shipped products. |
+| `forcedArm` | arm id or null | That arm for every install, including ones already assigned. The saved arm is kept, so deleting the key restores the split. This is how the test is concluded without a release. |
+| `arms[].id` | string | Reported as the arm name; use the Android ids so reports line up. |
+| `arms[].weight` | int > 0 | Relative share for new installs only; changing weights never moves an assigned install. |
+| `arms[].annualProductID` | product id, or absent | Absent = the shipped annual product. |
+| `arms[].monthlyProductID` / `weeklyProductID` | product id, or absent | The arm's short plan. Name one; monthly wins if both are given. |
+
+An arm that names no product at all (`{ "id": "pricing_a_current", "weight": 50 }`)
+is the shipped catalog: annual + monthly. Once an arm names any product it sells
+exactly what it names, so `annualProductID` alone is an annual-only arm.
+
+Rules:
+
+- Every product named here must exist in App Store Connect (themejunkyapps)
+  and be *Ready to Submit* before `enabled` flips to `true`, otherwise that
+  arm's paywall shows unavailable plans. For arm B that means creating
+  `…premium.weekly` (USD 4.99/week, 7-day free trial) and `…premium.annual.b`
+  (USD 48.99/year, 7-day free trial) in the existing `Keyboard Plus Premium`
+  subscription group.
+- The app pre-selects the arm's short plan (weekly in B, monthly in A).
+- Each install draws its own bucket (separate from the import-flow test) and
+  keeps its arm; the arm is re-read at every launch, so `forcedArm` and
+  `killSwitch` reach existing installs on their next launch.
+- Entitlements accept any `com.themejunky.keyboardplusapp.premium.*` product,
+  so retiring an arm never demotes someone still paying for it.
+- The arms map 1:1 to products, so App Store Connect sales by product are the
+  outcome measure per arm (same reading as the Android test).

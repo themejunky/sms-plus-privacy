@@ -1,12 +1,28 @@
 {
   "_comment": "Every key the iOS app understands, with the shipped defaults spelled out. NOT the served file - ios-config.json is. Copy the lines you actually want to change; anything left out keeps the app's built-in behaviour. Keys starting with _ are ignored by the app.",
-
   "planScreen": "paywall",
   "trialDays": 7,
   "trialMessages": 0,
-
   "_products": "Optional. Absent = the identifiers the app shipped with, per slot. Only set these to move to a NEW price point, and only after the product exists and is Ready to Submit in App Store Connect - naming a product that is not there takes the paywall to its Unavailable state for everyone at once.",
   "yearlyProductID": "com.themejunky.smsplus.ios.premium.yearly",
   "monthlyProductID": "com.themejunky.smsplus.ios.premium.monthly",
-  "lifetimeProductID": "com.themejunky.smsplus.ios.premium.lifetime"
+  "lifetimeProductID": "com.themejunky.smsplus.ios.premium.lifetime",
+  "_keyboardPlusPricingExperiment": "Keyboard Plus iOS only (SMS Plus ignores it). Off by default; see README-ios-config.md. Flip enabled to true only after both B products exist and are Ready to Submit in App Store Connect.",
+  "keyboardPlusPricingExperiment": {
+    "enabled": false,
+    "killSwitch": false,
+    "forcedArm": null,
+    "arms": [
+      {
+        "id": "pricing_a_current",
+        "weight": 50
+      },
+      {
+        "id": "pricing_b_weekly",
+        "weight": 50,
+        "annualProductID": "com.themejunky.keyboardplusapp.premium.annual.b",
+        "weeklyProductID": "com.themejunky.keyboardplusapp.premium.weekly"
+      }
+    ]
+  }
 }
