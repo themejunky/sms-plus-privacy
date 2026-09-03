@@ -167,14 +167,20 @@ overrides still work. A kill switch deliberately restores the shipped catalog.
     "forcedArm": null,
     "arms": [
       { "id": "pricing_a_current", "weight": 50 },
-      { "id": "pricing_b_weekly", "weight": 50,
+      { "id": "pricing_b_priceset", "weight": 50,
         "yearlyProductID": "com.themejunky.smsplus.ios.premium.yearly.b",
-        "weeklyProductID": "com.themejunky.smsplus.ios.premium.weekly",
+        "monthlyProductID": "com.themejunky.smsplus.ios.premium.monthly.b",
         "lifetimeProductID": "com.themejunky.smsplus.ios.premium.lifetime.b" }
     ]
   }
 }
 ```
+
+Owner decision 2026-09-03: arm A = the shipped catalog (monthly USD 9.99,
+yearly USD 69.99, lifetime); arm B = the existing price set B (monthly.b USD
+5.99, yearly.b USD 39.99, lifetime.b), no weekly. The block above is that
+mapping; flip `enabled` to `true` only once the SMS Plus app version carrying
+the split and the three B products are approved.
 
 | Field | Values | Meaning |
 |---|---|---|
@@ -198,11 +204,10 @@ Rules:
   `smsplus.onboarding.pricingArm.v1`, separate from every onboarding/import
   decision, and is re-resolved from cached config on every launch.
 - Every named product must exist in the `themejunkyapps` App Store Connect
-  account and be ready to sell before `enabled` becomes `true`. Today the B
-  yearly/monthly/lifetime products exist but their metadata is incomplete,
-  and `com.themejunky.smsplus.ios.premium.weekly` does not exist yet.
-- Do not enable the example until the owner decides the exact products and
-  prices in both arms, creates the weekly product, and completes all metadata.
+  account and be approved before `enabled` becomes `true`. The B products'
+  metadata was completed on 2026-09-03; they are reviewed together with the
+  app version. A weekly slot is supported by the app but no weekly product
+  exists for SMS Plus iOS today.
 - Entitlements keep the shipped products, every configured arm product, and
   any retired product under `com.themejunky.smsplus.ios.premium.*` valid.
 - SMS Plus currently has no purchase/paywall analytics event pipeline; results

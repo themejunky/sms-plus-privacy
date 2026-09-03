@@ -36,10 +36,10 @@
         "weight": 50
       },
       {
-        "id": "pricing_b_weekly",
+        "id": "pricing_b_priceset",
         "weight": 50,
         "yearlyProductID": "com.themejunky.smsplus.ios.premium.yearly.b",
-        "weeklyProductID": "com.themejunky.smsplus.ios.premium.weekly",
+        "monthlyProductID": "com.themejunky.smsplus.ios.premium.monthly.b",
         "lifetimeProductID": "com.themejunky.smsplus.ios.premium.lifetime.b"
       }
     ]
