@@ -24,5 +24,24 @@
         "weeklyProductID": "com.themejunky.keyboardplusapp.premium.weekly"
       }
     ]
+  },
+  "_smsPlusPricingExperiment": "SMS Plus iOS only (Keyboard Plus ignores it). Off by default; decide both arms, create the weekly product, and complete every product's metadata before enabling.",
+  "smsPlusPricingExperiment": {
+    "enabled": false,
+    "killSwitch": false,
+    "forcedArm": null,
+    "arms": [
+      {
+        "id": "pricing_a_current",
+        "weight": 50
+      },
+      {
+        "id": "pricing_b_weekly",
+        "weight": 50,
+        "yearlyProductID": "com.themejunky.smsplus.ios.premium.yearly.b",
+        "weeklyProductID": "com.themejunky.smsplus.ios.premium.weekly",
+        "lifetimeProductID": "com.themejunky.smsplus.ios.premium.lifetime.b"
+      }
+    ]
   }
 }

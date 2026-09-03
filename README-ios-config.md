@@ -151,3 +151,60 @@ Rules:
   so retiring an arm never demotes someone still paying for it.
 - The arms map 1:1 to products, so App Store Connect sales by product are the
   outcome measure per arm (same reading as the Android test).
+
+## SMS Plus iOS — pricing test (`smsPlusPricingExperiment`)
+
+SMS Plus iOS reads this namespaced block from the same file; Keyboard Plus
+ignores it. The block is off by default. Absent or disabled, the existing
+top-level `yearlyProductID` / `monthlyProductID` / `lifetimeProductID`
+overrides still work. A kill switch deliberately restores the shipped catalog.
+
+```json
+{
+  "smsPlusPricingExperiment": {
+    "enabled": false,
+    "killSwitch": false,
+    "forcedArm": null,
+    "arms": [
+      { "id": "pricing_a_current", "weight": 50 },
+      { "id": "pricing_b_weekly", "weight": 50,
+        "yearlyProductID": "com.themejunky.smsplus.ios.premium.yearly.b",
+        "weeklyProductID": "com.themejunky.smsplus.ios.premium.weekly",
+        "lifetimeProductID": "com.themejunky.smsplus.ios.premium.lifetime.b" }
+    ]
+  }
+}
+```
+
+| Field | Values | Meaning |
+|---|---|---|
+| `enabled` | bool, default `false` | `false` → no pricing bucket is drawn; the top-level product overrides, if any, remain in force. |
+| `killSwitch` | bool, default `false` | `true` → everyone, including assigned installs, gets the shipped yearly + monthly + lifetime catalog. |
+| `forcedArm` | arm id or null | That arm wins on the next launch without erasing the install's saved arm. Removing it restores the saved assignment. |
+| `arms[].id` | nonblank string | Stable arm name. Blank ids are ignored. |
+| `arms[].weight` | int > 0 | Relative share for new installs. Existing saved arms do not move when weights change. |
+| `arms[].yearlyProductID` | product id, or absent | In an arm that names any product, absent yearly falls back to the shipped yearly product. |
+| `arms[].monthlyProductID` / `weeklyProductID` | product id, or absent | The arm's short plan. Monthly wins if both are present. |
+| `arms[].lifetimeProductID` | product id, or absent | Lifetime is offered only when the arm names it. |
+
+An arm naming no product is the complete shipped catalog. Once an arm names
+any product it sells exactly the named slots, with only the yearly fallback
+described above. The paywall order is yearly, monthly-or-weekly, then lifetime;
+the short plan is preselected (weekly when present, otherwise monthly).
+
+Rules:
+
+- The assignment uses `smsplus.onboarding.pricingBucket.v1` and
+  `smsplus.onboarding.pricingArm.v1`, separate from every onboarding/import
+  decision, and is re-resolved from cached config on every launch.
+- Every named product must exist in the `themejunkyapps` App Store Connect
+  account and be ready to sell before `enabled` becomes `true`. Today the B
+  yearly/monthly/lifetime products exist but their metadata is incomplete,
+  and `com.themejunky.smsplus.ios.premium.weekly` does not exist yet.
+- Do not enable the example until the owner decides the exact products and
+  prices in both arms, creates the weekly product, and completes all metadata.
+- Entitlements keep the shipped products, every configured arm product, and
+  any retired product under `com.themejunky.smsplus.ios.premium.*` valid.
+- SMS Plus currently has no purchase/paywall analytics event pipeline; results
+  can be read by product in App Store Connect after the owner enables a final
+  product-to-arm mapping.
