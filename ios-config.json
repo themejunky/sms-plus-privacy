@@ -18,5 +18,23 @@
         "weeklyProductID": "com.themejunky.keyboardplusapp.premium.weekly"
       }
     ]
+  },
+  "smsPlusPricingExperiment": {
+    "enabled": true,
+    "killSwitch": false,
+    "forcedArm": null,
+    "arms": [
+      {
+        "id": "pricing_a_current",
+        "weight": 50
+      },
+      {
+        "id": "pricing_b_priceset",
+        "weight": 50,
+        "yearlyProductID": "com.themejunky.smsplus.ios.premium.yearly.b",
+        "monthlyProductID": "com.themejunky.smsplus.ios.premium.monthly.b",
+        "lifetimeProductID": "com.themejunky.smsplus.ios.premium.lifetime.b"
+      }
+    ]
   }
 }
