@@ -19,6 +19,23 @@
       }
     ]
   },
+  "keyboardPlusPricingV2": {
+    "enabled": true,
+    "killSwitch": false,
+    "forcedArm": "pricing_c_lifetime",
+    "arms": [
+      {
+        "id": "pricing_a_current",
+        "weight": 50
+      },
+      {
+        "id": "pricing_c_lifetime",
+        "weight": 50,
+        "monthlyProductID": "com.themejunky.keyboardplusapp.premium.monthly",
+        "lifetimeProductID": "com.themejunky.keyboardplusapp.premium.lifetime"
+      }
+    ]
+  },
   "smsPlusPricingExperiment": {
     "enabled": true,
     "killSwitch": false,
