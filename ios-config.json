@@ -5,7 +5,7 @@
   "keyboardPlusPricingExperiment": {
     "enabled": true,
     "killSwitch": false,
-    "forcedArm": null,
+    "forcedArm": "pricing_a_current",
     "arms": [
       {
         "id": "pricing_a_current",
