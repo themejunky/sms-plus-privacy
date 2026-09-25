@@ -22,7 +22,7 @@
   "keyboardPlusPricingV2": {
     "enabled": true,
     "killSwitch": false,
-    "forcedArm": "pricing_c_lifetime",
+    "forcedArm": null,
     "arms": [
       {
         "id": "pricing_a_current",
