@@ -39,7 +39,7 @@
   "smsPlusPricingExperiment": {
     "enabled": true,
     "killSwitch": false,
-    "forcedArm": null,
+    "forcedArm": "pricing_b_priceset",
     "arms": [
       {
         "id": "pricing_a_current",
