@@ -43,14 +43,15 @@
     "arms": [
       {
         "id": "pricing_a_current",
-        "weight": 50
+        "weight": 50,
+        "yearlyProductID": "com.themejunky.smsplus.ios.premium.yearly",
+        "monthlyProductID": "com.themejunky.smsplus.ios.premium.monthly"
       },
       {
         "id": "pricing_b_priceset",
         "weight": 50,
         "yearlyProductID": "com.themejunky.smsplus.ios.premium.yearly.b",
-        "monthlyProductID": "com.themejunky.smsplus.ios.premium.monthly.b",
-        "lifetimeProductID": "com.themejunky.smsplus.ios.premium.lifetime.b"
+        "monthlyProductID": "com.themejunky.smsplus.ios.premium.monthly.b"
       }
     ]
   }
