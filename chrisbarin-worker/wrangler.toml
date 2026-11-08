@@ -1,0 +1,14 @@
+name = "smsplus-privacy-policy"
+main = "index.js"
+compatibility_date = "2026-10-01"
+account_id = "1421f1262d105458dd52d74a731ce5eb"
+workers_dev = false
+routes = [
+  { pattern = "chrisbarin.com/SMS-Plus-Privacy-Policy.html*", zone_name = "chrisbarin.com" },
+  { pattern = "www.chrisbarin.com/SMS-Plus-Privacy-Policy.html*", zone_name = "chrisbarin.com" },
+]
+
+[[rules]]
+type = "Text"
+globs = ["**/*.html"]
+fallthrough = false
